@@ -1,0 +1,296 @@
+@use './responsive.scss' as *;
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family:  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body{
+  background-color: hsl(210, 36%, 96%);
+  color: hsl(209, 61%, 16%);
+}
+
+.App {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  &::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 65%;
+    top: 0;
+    left: 0;
+    background: url(./img/hero.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+
+
+  .container{
+    width: 90vw;
+    height: 100%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90vw;
+
+    .header{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: 0 5vw;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+
+      .nav{
+        @include mobile{
+          display: none;
+        }
+        display: flex;
+        .navItem{
+          position: relative;
+          font-size: 18px;
+          padding: 12px 0;
+          text-align: center;
+          width: 12vw;
+          cursor: default;
+
+          &:hover .hoverContainer{
+            display: block;
+          }
+
+          .hoverContainer{
+            display: none;
+            position: absolute;
+            top: 100%;
+            color: #000;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 32px;
+  
+            &::before{
+              content: '';
+              display: block;
+              width: 0;
+              height: 0;
+              border-left: 5px solid transparent;
+              border-right: 5px solid transparent;
+              border-bottom: 5px solid #fff;
+              position: absolute;
+              top: -5px;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+  
+            .hoverContainerHeader{
+              margin-bottom: 24px;
+              font-size: 16px;
+              text-align: left;
+              font-weight: 700;
+              padding-left: 8px;
+            }
+  
+            .items{
+              display: flex;
+              align-items: center;
+  
+              .item{
+                display: flex;
+                align-items: flex-end;
+                font-size: 16px;
+                line-height: 20px;
+                cursor: pointer;
+                text-decoration: none;
+                color: #000;
+                padding: 8px 36px 8px 8px;
+                i{
+                  margin-right: 8px;
+                  color: hsl(210, 22%, 49%);
+                }
+  
+                & + .item{
+                  margin-left: 16px;
+                }
+              }
+            }
+          }
+        }
+        
+
+        
+      }
+
+      .btn{
+        @include mobile{
+          display: none;
+        }
+        background-color: #000;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+        transition: .2s;
+        outline: none;
+        border: none;
+
+        &:hover{
+          background-color: hsl(210, 22%, 49%);
+        }
+      }
+
+      .sidebarBtn{
+        display: none;
+        @include mobile{
+          display: block;
+        }
+        background-color: #000;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+        transition: .2s;
+        outline: none;
+        border: none;
+      }
+    }
+
+    .content{
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .text{
+        width: calc(100%*2/3);
+        @include mobile{
+          width: 100%;
+        }
+
+        .textHeader{
+          font-size: 48px;
+          line-height: 56px;
+          margin-bottom: 32px;
+          max-width: 500px;
+        }
+
+        .description{
+          color:  hsl(210, 22%, 49%);
+          font-size: 20px;
+          margin-bottom: 20px;
+          line-height: 34px;
+          @include mobile{
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+
+        .btnText{
+          button{
+            background-color: #000;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: .2s;
+            outline: none;
+            border: none;
+
+            &:hover{
+              background-color: hsl(210, 22%, 49%);
+            }
+          }
+        }
+      }
+
+      .img{
+        @include mobile{
+          display: none;
+        }
+        width: calc(100%/3);
+        display: flex;
+        justify-content: center;
+        img{
+          width: 192px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .modal{
+    opacity: 0;
+    position: fixed;
+    inset: 0 0 0 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: .2s;
+    z-index: -1;
+    padding: 32px;
+    color: hsl(210, 22%, 49%);
+
+    &.active{
+      opacity: 1;
+      z-index: 100;
+    }
+
+    .boxContent{
+      padding: 64px 32px;
+      height: 100%;
+      background-color: #fff;
+      border-radius: 8px;
+      position: relative;
+      .boxContentItem{
+        margin-bottom: 32px;
+        p{
+          font-weight: 700;
+          font-size: 14px;
+          color: #000;
+          letter-spacing: 1px;
+          margin-bottom: 8px;
+        }
+
+        .boxContentItemNav{
+          display: flex;
+          flex-wrap: wrap;
+
+          .itemNav{
+            width: 50%;
+            padding: 8px 0;
+            font-size: 14px;
+            i{
+              padding-right: 8px;
+            }
+          }
+        }
+      }
+
+      .closeBtn{
+        font-size: 36px;
+        outline: none;
+        border: none;
+        background-color: transparent;
+        font-weight: 700;
+        color: hsl(210, 22%, 49%);
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
